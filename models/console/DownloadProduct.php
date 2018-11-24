@@ -46,7 +46,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_subcategory
+                    products_ref_subcategory
             ";
             $subcategories = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -58,7 +58,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_category
+                    products_ref_category
             ";
             $categories = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -70,7 +70,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_material
+                    products_ref_material
             ";
             $materials = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -82,7 +82,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_material_color
+                    products_ref_material_color
             ";
             $materialsColor = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -94,7 +94,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_insert_gems
+                    products_ref_insert_gems
             ";
             $insertGems = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -106,7 +106,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_subjects
+                    products_ref_subjects
             ";
             $subjects = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -118,7 +118,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_product_group
+                    products_ref_product_group
             ";
             $productGroups = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -130,7 +130,7 @@ class DownloadProduct
                 SELECT
                     *
                 FROM
-                    s_products_ref_zodiac
+                    products_ref_zodiac
             ";
             $zodiacSigns = yii\db\ActiveRecord::findBySql($query)->asArray()->all();
 
@@ -143,7 +143,7 @@ class DownloadProduct
             echo "Выполненно 0:% \n";
             foreach ($arProduct as $arProductProps) {
                 $query = "
-                    INSERT  INTO s_products(product_type, active, sort, code, name) 
+                    INSERT  INTO products(product_type, active, sort, code, name) 
                     VALUES (
                       'jewelry',
                       '{$arProductProps["ACTIVE"]}',
@@ -190,7 +190,7 @@ class DownloadProduct
 
 
                     $query = "
-                    INSERT INTO s_products_props_jewelry (
+                    INSERT INTO products_props_jewelry (
                         product_id,
                         subcaregory_id,
                         category_id,
@@ -220,7 +220,7 @@ class DownloadProduct
                         foreach ($arProductProps["INSERTS_COUNT"] as $name => $countInsert) {
                             $insertGemsId = $arInsertGems[$name];
                             $query = "
-                            INSERT INTO s_products_insert_count (
+                            INSERT INTO products_insert_count (
                                 product_id,
                                 value,
                                 ref_insert_gems_id

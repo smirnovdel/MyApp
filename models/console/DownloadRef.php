@@ -43,43 +43,43 @@ class DownloadRef
 
         try {
             $response = $db->createCommand()->batchInsert(
-                's_products_ref_product_group',
+                'products_ref_product_group',
                 ['value'],
                 $arDb["productGroup"]
             )->execute();
 
             $response =+ $db->createCommand()->batchInsert(
-                's_products_ref_material',
+                'products_ref_material',
                 ['value'],
                 $arDb["material"]
             )->execute();
 
             $response =+ $db->createCommand()->batchInsert(
-                's_products_ref_material_color',
+                'products_ref_material_color',
                 ['value'],
                 $arDb["materialCoor"]
             )->execute();
 
             $response =+ $db->createCommand()->batchInsert(
-                's_products_ref_category',
+                'products_ref_category',
                 ['value'],
                 $arDb["category"]
             )->execute();
 
             $response =+ $db->createCommand()->batchInsert(
-                's_products_ref_insert_gems',
+                'products_ref_insert_gems',
                 ['value'],
                 $arDb["insert"]
             )->execute();
 
             $response =+ $db->createCommand()->batchInsert(
-                's_products_ref_subjects',
+                'products_ref_subjects',
                 ['value'],
                 $arDb["subjects"]
             )->execute();
 
             $response =+ $db->createCommand()->batchInsert(
-                's_products_ref_zodiac',
+                'products_ref_zodiac',
                 ['value'],
                 $arDb["zodiac"]
             )->execute();
@@ -87,8 +87,8 @@ class DownloadRef
             foreach ($arDb["subcategory"] as $category => $arSub) {
                 foreach ($arSub as $subCategory) {
                     $query = "
-                        INSERT INTO s_products_ref_subcategory (value, caregory_id) 
-                            (SELECT '{$subCategory}', id FROM s_products_ref_category
+                        INSERT INTO products_ref_subcategory (value, caregory_id) 
+                            (SELECT '{$subCategory}', id FROM products_ref_category
                              WHERE value = '{$category}');
                     ";
                     $response =+ $db->createCommand($query)->execute();

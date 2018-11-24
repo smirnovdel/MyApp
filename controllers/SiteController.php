@@ -20,12 +20,17 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['?'],
                     ],
                 ],
             ],
@@ -54,6 +59,13 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionView($id)
+    {
+        $model = \app\models\SProducts::findOne(['article' => $id]);
+
+        return $model;
+    }
+
     /**
      * Displays homepage.
      *
@@ -61,7 +73,38 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $redis = new \Redis();
+
+        $redis->connect(
+        'redis',
+        6379
+        );
+
+        $redis->auth("eustatos");
+        $redis->bitCount("user:name");
+
+        $redis->setBit("mykey",0,1); $redis->setBit("mykey2",0,1);
+        $redis->setBit("mykey",1,0); $redis->setBit("mykey2",1,0);
+        $redis->setBit("mykey",2,1); $redis->setBit("mykey2",2,1);
+        $redis->setBit("mykey",3,1); $redis->setBit("mykey2",3,0);
+        $redis->setBit("mykey",4,1); $redis->setBit("mykey2",4,0);
+        $redis->setBit("mykey",5,1); $redis->setBit("mykey2",5,1);
+
+
+
+
+
+        $redis->bitOp("AND", "mk", "mykey", "mykey2");
+        $count = $redis->bitCount("mk");
+        for ($i = 0; $i<$count; $i++) {
+            $f[$i] = $redis->getBit("mk", $i);
+            if ($i!=$count && $f[$i] == 0) {
+                $count++;
+            }
+        }
+
+        return "'" . implode("', '", $f) ."'";
+        //return $this->render('index');
     }
 
     /**

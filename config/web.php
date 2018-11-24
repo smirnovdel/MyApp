@@ -43,15 +43,34 @@ $config = [
             ],
         ],
         'db' => $db,
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => '127.0.0.1',
+            'port' => 6379,
+            'database' => 0,
+            'password' => 'eustatos'
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'pattern'=>'/',
+                    'route' => 'site/index',
+                    'suffix' => '',
+                ],
+                [
+                    'pattern'=>'about',
+                    'route' => 'site/about',
+                    'suffix' => '.html',
+                ],
+                'product/<id:\d+>' => 'product/view',
             ],
         ],
     ],
     'params' => $params,
 ];
+
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
